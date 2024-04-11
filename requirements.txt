@@ -1,0 +1,8 @@
+requests
+bs4
+lxml
+dnslib
+aiohttp
+psycopg2-binary
+tldextract
+python-whois
