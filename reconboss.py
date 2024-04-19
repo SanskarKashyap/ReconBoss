@@ -171,8 +171,8 @@ try:
 	if output != 'None':
 		fpath = usr_data
 		dt_now = str(datetime.datetime.now().strftime('%d-%m-%Y_%H:%M:%S'))
-		fname = f'{fpath}fr_{hostname}.{output}'
-		respath = f'{fpath}fr_{hostname}'
+		fname = f'{fpath}_{hostname}.{output}'
+		respath = f'{fpath}_{hostname}'
 		if not os.path.exists(respath):
 			os.makedirs(respath)
 		out_settings = {

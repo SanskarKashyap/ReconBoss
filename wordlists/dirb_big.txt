@@ -7964,16 +7964,6 @@ fpost
 fpp
 fpss
 fptest
-fr
-fr-be
-fr-ca
-fr-ch
-fr-fr
-fr-lu
-fr_FR
-fr_fr
-fr_old
-fr_virgin
 fra
 fragen
 fragment
@@ -16069,7 +16059,7 @@ sec_id
 seccio
 seccion
 secciones
-secció
+secciï¿½
 second
 second-love-nl3
 secondary
