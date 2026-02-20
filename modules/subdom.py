@@ -15,6 +15,7 @@ from modules.subdomain_modules.certspot_subs import certspot
 from modules.subdomain_modules.wayback_subs import machine
 from modules.subdomain_modules.crtsh_subs import crtsh
 from modules.subdomain_modules.htarget_subs import hackertgt
+from modules.subdomain_modules.sslmate_subs import sslmate
 
 R = '\033[31m'  # red
 G = '\033[32m'  # green
@@ -38,7 +39,8 @@ async def query(hostname, tout, conf_path):
 			certspot(hostname, session),
 			machine(hostname, session),
 			hackertgt(hostname, session),
-			crtsh(hostname)
+			crtsh(hostname),
+			sslmate(hostname, conf_path, session)
 		)
 	await session.close()
 

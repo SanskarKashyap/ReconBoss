@@ -96,7 +96,7 @@ async def filter_out(target, url, status):
 		if str(url) != target + '/':
 			found.append(url)
 			print(f'{G}{status} {C}|{W} {url}')
-	elif status in {301, 302, 303, 307, 308}:
+	elif status in {302, 303, 307, 308}:
 		found.append(url)
 		print(f'{Y}{status} {C}|{W} {url}')
 	elif status in {403}:
@@ -112,7 +112,7 @@ def dir_output(output, data):
 			if entry[1] in {200}:
 				if output != 'None':
 					result.setdefault('Status 200', []).append(f'200, {entry[0]}')
-			elif entry[1] in {301, 302, 303, 307, 308}:
+			elif entry[1] in {302, 303, 307, 308}:
 				if output != 'None':
 					result.setdefault(f'Status {entry[1]}', []).append(f'{entry[1]}, {entry[0]}')
 			elif entry[1] in {403}:
