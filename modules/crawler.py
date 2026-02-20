@@ -61,7 +61,7 @@ def crawler(target, output, data):
 			if ext.subdomain:
 				hostname = f'{ext.subdomain}.{ext.domain}.{ext.suffix}'
 			else:
-				hostname = ext.registered_domain
+				hostname = getattr(ext, 'top_domain_under_public_suffix', ext.registered_domain)
 			base_url = f'{protocol}://{hostname}'
 			r_url = f'{base_url}/robots.txt'
 			sm_url = f'{base_url}/sitemap.xml'
@@ -225,7 +225,7 @@ async def internal_links(target, data, soup, output):
 	print(f'{G}[+] {C}Extracting Internal Links{W}', end='', flush=True)
 
 	ext = tldextract.extract(target)
-	domain = ext.registered_domain
+	domain = getattr(ext, 'top_domain_under_public_suffix', ext.registered_domain)
 
 	links = soup.find_all('a')
 	for link in links:
@@ -244,7 +244,7 @@ async def external_links(target, data, soup, output):
 	print(f'{G}[+] {C}Extracting External Links{W}', end='', flush=True)
 
 	ext = tldextract.extract(target)
-	domain = ext.registered_domain
+	domain = getattr(ext, 'top_domain_under_public_suffix', ext.registered_domain)
 
 	links = soup.find_all('a')
 	for link in links:

@@ -6,3 +6,5 @@ aiohttp
 psycopg2-binary
 tldextract
 python-whois
+cryptography
+aiodns

@@ -35,6 +35,7 @@ parser = argparse.ArgumentParser(description=f'ReconBoss - The Last Web Recon To
 parser.add_argument('url', help='Target URL')
 parser.add_argument('--headers', help='Header Information', action='store_true')
 parser.add_argument('--sslinfo', help='SSL Certificate Information', action='store_true')
+parser.add_argument('--sslaudit', help='SSL Labs Audit', action='store_true')
 parser.add_argument('--whois', help='Whois Lookup', action='store_true')
 parser.add_argument('--crawl', help='Crawl Target', action='store_true')
 parser.add_argument('--dns', help='DNS Enumeration', action='store_true')
@@ -78,6 +79,7 @@ except SystemExit:
 target = args.url
 headinfo = args.headers
 sslinfo = args.sslinfo
+sslaudit = args.sslaudit
 whois = args.whois
 crawl = args.crawl
 dns = args.dns
@@ -144,7 +146,7 @@ try:
 
 	print(f'{G}[+] {C}Target : {W}{target}')
 	ext = tldextract.extract(target)
-	domain = ext.registered_domain
+	domain = getattr(ext, 'top_domain_under_public_suffix', ext.registered_domain)
 	if not domain:
 		domain = ext.domain
 	domain_suffix = ext.suffix
@@ -187,6 +189,7 @@ try:
 
 		from modules.dns import dnsrec
 		from modules.sslinfo import cert
+		from modules.sslaudit import ssllabs_audit
 		from modules.portscan import scan
 		from modules.dirrec import hammer
 		from modules.crawler import crawler
@@ -197,6 +200,7 @@ try:
 
 		headers(target, out_settings, data)
 		cert(hostname, sslp, out_settings, data)
+		ssllabs_audit(domain, out_settings, data)
 		whois_lookup(domain, domain_suffix, path_to_script, out_settings, data)
 		dnsrec(domain, out_settings, data)
 		if not type_ip:
@@ -215,6 +219,11 @@ try:
 		from modules.sslinfo import cert
 		log_writer('Starting SSL enum...')
 		cert(hostname, sslp, out_settings, data)
+
+	if sslaudit:
+		from modules.sslaudit import ssllabs_audit
+		log_writer('Starting SSL Labs audit...')
+		ssllabs_audit(domain, out_settings, data)
 
 	if whois:
 		from modules.whois import whois_lookup
@@ -256,7 +265,7 @@ try:
 		log_writer('Starting dir enum...')
 		hammer(target, threads, tout, wdlist, redir, sslv, dserv, out_settings, data, filext)
 
-	if not any([full, headinfo, sslinfo, whois, crawl, dns, subd, wback, pscan, dirrec]):
+	if not any([full, headinfo, sslinfo, sslaudit, whois, crawl, dns, subd, wback, pscan, dirrec]):
 		print(f'\n{R}[-] Error : {C}At least One Argument is Required with URL{W}')
 		log_writer('At least One Argument is Required with URL, exiting')
 		output = 'None'
