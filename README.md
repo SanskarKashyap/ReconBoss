@@ -1,16 +1,14 @@
-# ReconBoss
+# ReconBoss Installation
 
 ```bash
 python3 -m venv reconboss
 source reconboss/bin/activate
 pip install -r requirements.txt
+go install github.com/lc/gau/v2/cmd/gau@latest
 ```
 
-# Recommended (For Maximum Wayback/Subdomain Results)
-
+# ReconBoss Usage
 ```bash
-go install github.com/lc/gau/v2/cmd/gau@latest
-
 chmod +x reconboss.py
 ./reconboss.py -h
 ./reconboss.py --full https://xyz.com
